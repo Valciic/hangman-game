@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#title {
+    text-align: center;
+    padding: 1em 0;
+    border: 1px solid black;
+    margin: 0.5em;
+}
+
+.ui-container {
+    background: yellow;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    place-items: center;
+    margin: 0 1em;;
+}
+
+.input-container {
+    width: 60%;
+    margin: 0 auto;
+    border: 2px red solid;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    left: 10%;
+}
+#guessed-letter, .label, #game-btn {
+    cursor: pointer;
+}
+#guessed-letter {
+    max-width: 100px;
+    padding: 0.5em;
+    text-align: center;
+}
+.label {
+    padding: 0.5em 0 1em;
+    background-color: cornsilk; 
+}
+
+#game-btn {
+    padding: 0.6em 1.8em;
+    border-radius: 15px;
+    border: none;
+    background-color: darkblue;
+    color: #fff;
+    transition: 0.3s;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+#game-btn:focus {
+    outline: none;
+    background: darkblue;       
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px magenta;
+}       
+#game-btn:hover{
+    background-color: magenta;
+    box-shadow: 0 4px 2px darkblue;
+}
+#game-btn:active {
+    box-shadow: 0 1px 2px darkblue;
+    transform: translateY(2px);
+}
+#guesses-left {
+    padding: 2em;
+    font-size: 48px;
+    color: #000;
+}
+
+#answer-field {
+    margin: 1em auto;
+    padding: 0.2em;
+    font-size: 24px;
+    width: 250px;
+    height: 100%;
+    border: 1px solid blue;
+    border-radius: 5px;
+    background: yellow;
+    text-align: center;
+    letter-spacing: 3px;
+}
+#message {
+    width: 30%;
+    margin: 0 auto;
+    text-align: center;
+}
