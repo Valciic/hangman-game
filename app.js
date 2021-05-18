@@ -20,12 +20,13 @@ let guessesLeft = 5;
 document.addEventListener("DOMContentLoaded", () => {
   displayHiddenWord();
   msg.showGuessesLeft(guessesLeft);
-  guessedLetter.disabled = false;
 });
 btn.addEventListener("click", (e) => {
-    if(e.target.classList.contains("play-again")) {
-        resetGame();
-    }
+  if (e.target.classList.contains("play-again")) {
+    resetGame();
+  } else {
+    checkLetter(guessedLetter.value);
+  }
 });
 guessedLetter.addEventListener("input", () => {
   checkLetter(guessedLetter.value);
@@ -39,9 +40,7 @@ function displayHiddenWord() {
     answerField.textContent = results[0].replace(/\D/g, "*");
     shownAnswer = answerField.textContent.split("");
     correctWord = results[0].split("");
-    // console.log(correctWord);
-    // console.log(shownAnswer);
-  });
+  })
 }
 
 function checkLetter(letter) {
@@ -53,32 +52,36 @@ function checkLetter(letter) {
       msg.showMessage(NO_SUCH_LETTER);
       msg.showGuessesLeft(--guessesLeft);
     }
-    if (guessesLeft === 0 && visibleAnswer.includes("*")) {
-        gameOver(false);
-        answerField.textContent = correctWord.join('');
-        btn.innerText = "Play again?";
-        btn.classList.add("play-again")
-    };
-    if (!visibleAnswer.includes('*')) {
-        gameOver(true);
-        btn.innerText = "Play again?";
-        btn.classList.add("play-again");
-    }
+    isGameFinished(guessesLeft, visibleAnswer);
   } else {
     msg.showMessage(ONLY_LETTERS);
   }
 }
 
 function resetGame() {
-    btn.classList.remove("play-again");
-    btn.innerText = "Guess!"
-    guessedLetter.disabled = false;
-    displayHiddenWord();
-    guessesLeft = 5;
-    msg.showGuessesLeft(guessesLeft);
-    guessedLetter.focus();
+  btn.classList.remove("play-again");
+  btn.innerText = "Guess!";
+  guessedLetter.disabled = false;
+  guessedLetter.focus();
+  displayHiddenWord();
+  guessesLeft = 5;
+  msg.showGuessesLeft(guessesLeft);
+  msg.showMessage("");
 }
 
+function isGameFinished(guessCount, visibleAnswer) {
+  if (guessCount === 0 && visibleAnswer.includes("*")) {
+    gameOver(false);
+    answerField.textContent = correctWord.join("");
+    btn.innerText = "Play again?";
+    btn.classList.add("play-again");
+  }
+  if (!visibleAnswer.includes("*")) {
+    gameOver(true);
+    btn.innerText = "Play again?";
+    btn.classList.add("play-again");
+  }
+}
 function gameOver(won) {
   if (won === false) msg.showMessage(YOU_LOST);
   else msg.showMessage(YOU_WON);

@@ -2,6 +2,7 @@ class Verification {
   constructor() {
     this.answerField = document.getElementById("answer-field");
     this.guessedLetter = document.getElementById('guessed-letter');
+    this.btn = document.getElementById("game-btn");
     this.validLetters = /[a-z]/i;
   }
   replaceCorrectLetters(guessedLetter, correctWord, answerField) {
@@ -16,4 +17,6 @@ class Verification {
   isLetter(value) {
       return this.validLetters.test(value);
   }
+
+  
 }

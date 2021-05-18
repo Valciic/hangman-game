@@ -30,6 +30,12 @@
     position: relative;
     left: 10%;
 }
+
+p {
+    text-align: center;
+    position: relative;
+    bottom: 60px;
+}
 #guessed-letter, .label, #game-btn {
     cursor: pointer;
 }
