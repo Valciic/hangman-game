@@ -3,11 +3,14 @@ const answerField = document.getElementById("answer-field");
 const message = document.getElementById("message");
 const btn = document.getElementById("game-btn");
 const guessesDisplay = document.getElementById("guesses-left");
+const usedLettersDisplay = document.querySelector(".used-letters-container");
 
 const ONLY_LETTERS = "Words contain only letters";
 const NO_SUCH_LETTER = "There is no such letter in this word!";
 const YOU_LOST = "You did not guess such a easy word...";
 const YOU_WON = "You guessed the word! Aren't you amazing?!";
+const DONT_WASTE_GUESSES =
+  "You tried this letter already! Don't waste guesses!";
 
 const randomWord = new RandomWord();
 const verification = new Verification();
@@ -40,17 +43,27 @@ function displayHiddenWord() {
     answerField.textContent = results[0].replace(/\D/g, "*");
     shownAnswer = answerField.textContent.split("");
     correctWord = results[0].split("");
-  })
+  });
 }
 
 function checkLetter(letter) {
   if (verification.isLetter(letter)) {
     const visibleAnswer = answerField.textContent;
-    if (correctWord.includes(letter) && !visibleAnswer.includes(letter))
+    const usedLetters = usedLettersDisplay.textContent;
+    if (usedLetters.includes(letter)) {
+      msg.showMessage(DONT_WASTE_GUESSES);
+      msg.showGuessesLeft(--guessesLeft);
+
+    } else if (
+      correctWord.includes(letter) &&
+      !visibleAnswer.includes(letter)
+    ) {
       verification.replaceCorrectLetters(letter, correctWord, visibleAnswer);
-    else {
+      usedLettersDisplay.textContent += `${letter} `;
+    } else {
       msg.showMessage(NO_SUCH_LETTER);
       msg.showGuessesLeft(--guessesLeft);
+      usedLettersDisplay.textContent += `${letter} `;
     }
     isGameFinished(guessesLeft, visibleAnswer);
   } else {
@@ -63,10 +76,11 @@ function resetGame() {
   btn.innerText = "Guess!";
   guessedLetter.disabled = false;
   guessedLetter.focus();
-  displayHiddenWord();
   guessesLeft = 5;
   msg.showGuessesLeft(guessesLeft);
   msg.showMessage("");
+  usedLettersDisplay.textContent = "";
+  displayHiddenWord();
 }
 
 function isGameFinished(guessCount, visibleAnswer) {
